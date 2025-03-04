@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<head>
+    
+    <title>Pomodoro Timer with Cat</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            text-align: center;
+            background-color: #ffeef2;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+            margin: 0;
+        }
+        .timer {
+            font-size: 48px;
+            font-weight: bold;
+            margin: 20px;
+        }
+        .buttons {
+            display: flex;
+            gap: 15px;
+        }
+        button {
+            padding: 10px 20px;
+            font-size: 18px;
+            cursor: pointer;
+            border-radius: 50px;
+            border: none;
+            background-color: #ffccd5;
+            transition: background 0.3s;
+        }
+        button:hover {
+            background-color: #ffb3c1;
+        }
+        .cat {
+            width: 400px;
+            margin-top: 20px;
+        }
+    </style>
+</head>
+<body>
+    <h1>Pomodoro Timer</h1>
+    <div class="timer" id="timer">25:00</div>
+    <div class="buttons">
+        <button onclick="controlTimer('start')">Start</button>
+        <button onclick="controlTimer('stop')">Stop</button>
+        <button onclick="controlTimer('reset')">Reset</button>
+    </div>
+    <img src="C:\Users\Helly\OneDrive\Desktop\@CodeAplha\download.gif" class="cat" id="cat" alt="Moving Cat">
+    
+    <script>
+        let timeLeft = 1500, timerInterval, isRunning = false;
+        const timerDisplay = document.getElementById("timer");
+
+        function updateTimer() {
+            let m = Math.floor(timeLeft / 60), s = timeLeft % 60;
+            timerDisplay.textContent = `${m}:${s < 10 ? '0' : ''}${s}`;
+        }
+
+        function controlTimer(action) {
+            if (action === 'start' && !isRunning) {
+                isRunning = true;
+                timerInterval = setInterval(() => {
+                    if (timeLeft > 0) {
+                        timeLeft--;
+                        updateTimer();
+                    } else controlTimer('stop');
+                }, 1000);
+            } else if (action === 'stop') {
+                clearInterval(timerInterval);
+                isRunning = false;
+            } else if (action === 'reset') {
+                clearInterval(timerInterval);
+                timeLeft = 1500;
+                updateTimer();
+                isRunning = false;
+            }
+        }
+    </script>
+</body>
+</html>
